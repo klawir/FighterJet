@@ -1,22 +1,35 @@
 #pragma once
 class Player
 {
-	int kasa, zycie;
-	int wspolrzednaGracza1, wspolrzednaGracza2, wspolrzednaGracza3;
+	int money, life;
+	int cockpitY, leftWingY, rightWingY;
+	int cocpitStartLocateX;
+	int leftWingStartLocateX;
+	int wingRightStartLocateX;
 public:
 	Player();
 	~Player();
 
-	int GetCoordinateAirPlaneUp();
-	int GetCoordinateAirPlaneLeft();
-	int GetCoordinateAirPlaneRight();
+	int GetCockpitCoordinateY();
+	int GetCoordinateLeftWingY();
+	int GetCoordinateWingRightY();
 
-	void SetCoordinateAirPlaneUp(int);
-	void SetCoordinateAirPlaneLeft(int);
-	void SetCoordinateAirPlaneRight(int);
+	void SetCockpitCoordinateY(int);
+	void SetCoordinateLeftWingY(int);
+	void SetCoordinateWingRightY(int);
 
-	void IncrementCoordinateAirPlane();
-	void DecrementCoordinateAirPlane();
+	int GetCocpitStartLocateX();
+	int GetLeftWingStartLocateX();
+	int GetWingRightStartLocateX();
+
+	void SetCocpitStartLocateX(int);
+	void SetLeftWingStartLocateX(int);
+	void SetWingRightStartLocateX(int);
+
+	void IncrementCoordinateAirPlaneY();
+	void DecrementCoordinateAirPlaneY();
+
+	void StartLocateAirPlaneInit();
 
 	int getMoney();
 	void AddMoney(int);

@@ -1,4 +1,5 @@
-#include "biblioteki.h"
+#pragma once
+#include "librares.h"
 class Mob
 {
 	int polozenieX, polozenieY;

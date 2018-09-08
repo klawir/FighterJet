@@ -1,25 +1,26 @@
-#include "biblioteki.h"
+#pragma once
+#include "librares.h"
 class Menu
 {
-	int klawisz, wybor;
-	bool Wyjscie;
+	int key, choice;
+	bool exit;
 public:
 	Menu();
-	void cls();
-	void kolor_bialy();
-	void kolor_czerwony();
-	void strzalki(int min, int max);
-	void Pokaz();
-	bool GetWyjscie() { return Wyjscie; }
-	void SetWyjscie(bool zmien) { Wyjscie = zmien; }
-	int GetWybor() { return wybor; }
+	void ClearScreen();
+	void WhiteColor();
+	void ColorRed();
+	void MenuNavigation(int min, int max);
+	void Display();
+	bool GetExit() { return exit; }
+	void SetExit(bool zmien) { exit = zmien; }
+	int GetChoice() { return choice; }
 };
 Menu::Menu()
 {
-	Wyjscie = false;
-	wybor = 1;
+	exit = false;
+	choice = 1;
 }
-void Menu::cls()
+void Menu::ClearScreen()
 {
 	HANDLE hOut;
 	COORD Position;
@@ -28,38 +29,34 @@ void Menu::cls()
 	Position.Y = 0;
 	SetConsoleCursorPosition(hOut, Position);
 }
-void Menu::kolor_bialy()
+void Menu::WhiteColor()
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
-void Menu::kolor_czerwony()
+void Menu::ColorRed()
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED) | FOREGROUND_INTENSITY;
 }
-void Menu::strzalki(int min, int max)
+void Menu::MenuNavigation(int min, int max)
 {
-	klawisz = _getch();
-	if (klawisz == 72)
-	{
-		if (wybor>min) --wybor;
-	}
-	else if (klawisz == 80)
-	{
-		if (wybor<max) ++wybor;
-	}
+	key = _getch();
+	if (key == keyUp)
+		if (choice>min) choice--;
+	else if (key == keyDown)
+		if (choice<max) choice++;
 }
-void Menu::Pokaz()
+void Menu::Display()
 {
 	while (true)
 	{
-		kolor_bialy();
-		if (wybor == 1) { kolor_czerwony(); }cout << "\t\t\t\tplay" << endl; kolor_bialy();
-		if (wybor == 2) { kolor_czerwony(); }cout << "\t\t\t\tquit" << endl << endl << endl; kolor_bialy();
+		WhiteColor();
+		if (choice == 1) { ColorRed(); }cout << "\t\t\t\tplay" << endl; WhiteColor();
+		if (choice == 2) { ColorRed(); }cout << "\t\t\t\tquit" << endl << endl << endl; WhiteColor();
 		cout << "\tMenu navigation up down, and accept enter" << endl;
 		cout << "\tin game navigation lef right " << endl;
 		cout << "\tshoot space" << endl;
-		strzalki(1, 2);
-		if (klawisz == 13) break;
-		cls();
+		MenuNavigation(1, 2);
+		if (key == keyEnter) break;
+		ClearScreen();
 	}
 }

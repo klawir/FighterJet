@@ -1,41 +1,34 @@
-#include "gra.h"
+#include "game.h"
 #include "menu.h"
-#include "strzal.h"
+#include "shoot.h"
 #include <ctime>
 #include "rlutil.h"
 int main()
 {
-	
-	HWND konsola = GetConsoleWindow();
-	RECT rozdzielczoscKonsoli;
-	GetWindowRect(konsola, &rozdzielczoscKonsoli);
-	MoveWindow(konsola, (GetSystemMetrics(SM_CXSCREEN)/2)-(rozdzielczoscKonsoli.right /2),
-		(GetSystemMetrics(SM_CYSCREEN)/2)-(rozdzielczoscKonsoli.bottom /2),
-		rozdzielczoscKonsoli.right, 
-		rozdzielczoscKonsoli.bottom, TRUE);
+	HWND console = GetConsoleWindow();
+	RECT consoleResolution;
+	GetWindowRect(console, &consoleResolution);
+	MoveWindow(console, (GetSystemMetrics(SM_CXSCREEN)/2)-(consoleResolution.right /2),
+		(GetSystemMetrics(SM_CYSCREEN)/2)-(consoleResolution.bottom /2),
+		consoleResolution.right, 
+		consoleResolution.bottom, TRUE);
 	srand(time(0));
-	Gra gra;
+	Game game;
 	Menu menu;
-	while (!menu.GetWyjscie())
+	while (!menu.GetExit())
 	{
-		system("cls");
+		//system("cls");
 		
-		menu.Pokaz();
-		switch (menu.GetWybor())
+		menu.Display();
+		switch (menu.GetChoice())
 		{
-			case 1:
-			{
-				
-			}break;
-			case 2:
-			{
-				return 0;
-			}
+			case 1: break;
+			case 2: return 0;
 		}
-		gra.przygotuj_plansze();
+		game.PrepareMap();
 		system("cls");
-		gra.petla_gry();
-		gra.~Gra();
+		game.GameLoop();
+		game.~Game();
 		rlutil::setBackgroundColor(0);
 	}
 }

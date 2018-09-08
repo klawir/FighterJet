@@ -1,78 +1,116 @@
+#pragma once
 #include "Player.h"
 
 
 Player::Player()
 {
-	zycie = 5;
-	kasa = 0;
+	life = 5;
+	money = 0;
+	StartLocateAirPlaneInit();
+
 }
 Player::~Player()
 {
-	zycie = 5;
-	kasa = 0;
+	life = 5;
+	money = 0;
 }
-int Player::GetCoordinateAirPlaneUp()
+int Player::GetCockpitCoordinateY()
 {
-	return wspolrzednaGracza1;
+	return cockpitY;
 }
-int Player::GetCoordinateAirPlaneLeft()
+int Player::GetCoordinateLeftWingY()
 {
-	return wspolrzednaGracza2;
+	return leftWingY;
 }
-int Player::GetCoordinateAirPlaneRight()
+int Player::GetCoordinateWingRightY()
 {
-	return wspolrzednaGracza3;
+	return rightWingY;
 }
-void Player::SetCoordinateAirPlaneUp(int value)
+void Player::SetCockpitCoordinateY(int value)
 {
-	wspolrzednaGracza1 = value;
+	cockpitY = value;
 }
-void Player::SetCoordinateAirPlaneLeft(int value)
+void Player::SetCoordinateLeftWingY(int value)
 {
-	wspolrzednaGracza2 = value;
+	leftWingY = value;
 }
-void Player::SetCoordinateAirPlaneRight(int value)
+void Player::SetCoordinateWingRightY(int value)
 {
-	wspolrzednaGracza3 = value;
-}
-void Player::IncrementCoordinateAirPlane()
-{
-	wspolrzednaGracza1++;
-	wspolrzednaGracza2++;
-	wspolrzednaGracza3++;
-}
-void Player::DecrementCoordinateAirPlane()
-{
-	wspolrzednaGracza1--;
-	wspolrzednaGracza2--;
-	wspolrzednaGracza3--;
+	rightWingY = value;
 }
 
+int Player::GetCocpitStartLocateX()
+{
+	return cocpitStartLocateX;
+}
+int Player::GetLeftWingStartLocateX()
+{
+	return leftWingStartLocateX;
+}
+int Player::GetWingRightStartLocateX()
+{
+	return wingRightStartLocateX;
+}
+
+void Player::SetCocpitStartLocateX(int value)
+{
+	value = cocpitStartLocateX;
+}
+void Player::SetLeftWingStartLocateX(int value)
+{
+	value = leftWingStartLocateX;
+}
+void Player::SetWingRightStartLocateX(int value)
+{
+	value = wingRightStartLocateX;
+}
+
+void Player::IncrementCoordinateAirPlaneY()
+{
+	cockpitY++;
+	leftWingY++;
+	rightWingY++;
+}
+void Player::DecrementCoordinateAirPlaneY()
+{
+	cockpitY--;
+	leftWingY--;
+	rightWingY--;
+}
+void Player::StartLocateAirPlaneInit()
+{
+	cockpitY = 15;
+	leftWingY = 14;
+	rightWingY = 16;
+	cocpitStartLocateX = 16;
+	leftWingStartLocateX = 17;
+	wingRightStartLocateX = 17;
+}
 int Player::getMoney()
 {
-	return kasa;
+	return money;
 }
 void Player::AddMoney(int value)
 {
-	kasa += value;
+	money += value;
 }
 void Player::SetMoney(int value)
 {
-	kasa = value;
+	money = value;
 }
 int Player::getLife()
 {
-	return zycie;
+	return life;
 }
 void Player::IncrementLife()
 {
-	zycie++;
+	life++;
 }
 void Player::DecrementLife()
 {
-	zycie--;
+	life--;
 }
 bool Player::Gameover()
 {
-	return zycie < 1;
+	return life < 1;
 }
