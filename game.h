@@ -1,34 +1,54 @@
 #pragma once
 #include "librares.h"
+#include "rlutil.h"
+#include "Missile.h"
+#include "mob.h"
+#include "Player.h"
+#include "GameBoard.h"
+#include "Keyboard.h"
+#include "menu.h"
+
 class Game
 {
-	static const int size1 = 19;
-	static const int size2 = 25;
-	int shootCoord, shootForward, enemyKilled;
+	int enemyKilled;
 	int fallingTime, enemyFallingTime, indexX, indexY;
 	int enemyKilledFallingSpeedModulo;
 	int enemyKilledIncrementLifeModulo;
 	int indexRestrictiveModulo;
-	
-	char map[size1][size2];
-	int wallLeft;
-	int wallRight;
+
 	int counter;
 	int bonusLife;
-	int missileNumber, mobNumber;
+	int mobNumber;
 	int index;
-	bool beginning, mobBeginning;
+	bool mobBeginning;
 	int coordColisionX, coordColisionY;
+	Menu *menu;
+	Mob *mob;
+	Player *player;
+	GameBoard *gameBoard;
+	Missile *missile;
+	Keyboard *keyboard;
 public:
 	Game();
 	~Game();
-	void PrepareMap();
-	void Map();
-	void Keyboard();
+	void CreateMenu();
+	void CreateMob();
+	void CreatePlayer();
+	void CreateGameBoard();
+	void CreateMissile();
+	void CreateKeyboard();
+
+	Menu *GetMenu();
+	Mob *GetMob();
+	Player *GetPlayer();
+	GameBoard *GetGameBoard();
+	Missile *GetMissile();
+	Keyboard *GetKeyboard();
+
 	int EnemyRandom();
 	void Enemy();
-	void Missile();
+	void _missile();
 	void GameLoop();
 	void Display();
-	bool Check();
+	bool CheckHit();
 };

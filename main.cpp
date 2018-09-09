@@ -1,10 +1,17 @@
+#pragma once
 #include "game.h"
-#include "menu.h"
-#include "shoot.h"
-#include <ctime>
-#include "rlutil.h"
+
+extern Missile *missile;
+
 int main()
 {
+	Game *game = new Game();
+	game->CreateMenu();
+	game->CreateMob();
+	game->CreatePlayer();
+	game->CreateGameBoard();
+	game->CreateMissile();
+	game->CreateKeyboard();
 	HWND console = GetConsoleWindow();
 	RECT consoleResolution;
 	GetWindowRect(console, &consoleResolution);
@@ -13,22 +20,19 @@ int main()
 		consoleResolution.right, 
 		consoleResolution.bottom, TRUE);
 	srand(time(0));
-	Game game;
-	Menu menu;
-	while (!menu.GetExit())
+	
+	while (!game->GetMenu()->GetExit())
 	{
-		//system("cls");
-		
-		menu.Display();
-		switch (menu.GetChoice())
+		game->GetMenu()->Display();
+		switch (game->GetMenu()->GetChoice())
 		{
 			case 1: break;
 			case 2: return 0;
 		}
-		game.PrepareMap();
+		game->GetGameBoard()->PrepareMap(game->GetPlayer());
 		system("cls");
-		game.GameLoop();
-		game.~Game();
+		game->GameLoop();
+		game->~Game();
 		rlutil::setBackgroundColor(0);
 	}
 }

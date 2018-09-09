@@ -1,32 +1,24 @@
 #pragma once
 #include "game.h"
-#include "rlutil.h"
-#include "shoot.h"
-#include "mob.h"
-#include "Player.h"
 
-const int sizeOfArray = 3;
 int indexRestrictive;
 bool IndexRestrictive;
-Naboj *missile;
-Mob *mob;
-Player *player;
+int indexX, indexY;
+
 Game::Game()
 {
 	mobNumber = 0;
 	enemyFallingTime = 40;
-	wallLeft = 2;
-	wallRight = size2-2;
 	bonusLife = 1;
-	missileNumber = 0;
 	index = 0;
-	beginning = true;
 	mobBeginning = true;
 	coordColisionX = 0;
 	coordColisionY = 0;
 	indexRestrictive = 1;
 	IndexRestrictive = false;
 	player = new Player();
+	gameBoard = new GameBoard();	
+	
 	enemyKilledFallingSpeedModulo = 7;
 	enemyKilledIncrementLifeModulo = 10;
 	indexRestrictiveModulo = 5;
@@ -44,11 +36,8 @@ Game::~Game()
 {
 	mobNumber = 0;
 	enemyFallingTime = 40;
-	wallLeft = 2;
 	bonusLife = 1;
-	missileNumber = 0;
 	index = 0;
-	beginning = true;
 	mobBeginning = true;
 	coordColisionX = 0;
 	coordColisionY = 0;
@@ -56,155 +45,93 @@ Game::~Game()
 	IndexRestrictive = false;
 	player->~Player();
 }
-void Game::PrepareMap()
+void Game::CreateMenu()
 {
-	for (indexX = 0; indexX<size1; indexX++)
-	{
-		for (indexY = 0; indexY<size2; indexY++)
-		{
-			map[indexX][indexY] = ' ';
-			if (indexY == size2<1)
-				cout << endl;
-			cout << map[indexX][indexY];
-		}
-	}
-	for (indexX = 0; indexX<size1; indexX++)
-		map[indexX][1] = '|';
-	for (indexX = 0; indexX<size1; indexX++)
-		map[indexX][0] = ' ';
-	map[0][0] = map[0][size2 - 1] = ' ';
-	map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-	map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-	map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
-} 
-void Game::Map()
-{
-	rlutil::setBackgroundColor(7);
-	for (indexX = 0; indexX<size1; indexX++)
-	{
-		for (indexY = 0; indexY<size2; indexY++)
-		{
-			map[indexX][size2 - 1] = '|';
-			if (indexY == size2 < 1)
-				cout << endl;
-			else if(map[indexX][indexY]=='|')
-				rlutil::setColor(red);
-			else if (map[indexX][indexY] == 'X')
-				rlutil::setColor(2);
-			else if (map[indexX][indexY] == '^' || map[indexX][indexY] == '<' || map[indexX][indexY] == '>')
-				rlutil::setColor(bronze);
-			else if (map[indexX][indexY] == 'Q')
-				rlutil::setColor(2);
-			else if (map[indexX][indexY] == '!')
-				rlutil::setColor(4);
-			cout << map[indexX][indexY];
-		}
-	}
-	cout << "$ " << player->getMoney() << " " << endl;
-	cout << "lifes " << player->getLife() << endl;
+	menu = new Menu();
 }
-void Game::Keyboard()
+void Game::CreateMob()
 {
-	int key;
-	if (_kbhit())
-	{
-		key = _getch();
-		switch (key)
-		{
-		case keyLeft:
-		{
-			if (player->GetCoordinateLeftWingY()>wallLeft)
-			{
-				map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = ' ';
-				map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = ' ';
-				map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = ' ';
-				player->DecrementCoordinateAirPlaneY();
-				map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-				map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-				map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
-			}
-		}break;
-		case keyRight:
-		{
-			if (player->GetCoordinateWingRightY()< wallRight)
-			{
-				map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = ' ';
-				map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = ' ';
-				map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = ' ';
-				player->IncrementCoordinateAirPlaneY();
-				map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-				map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-				map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
-			}
-		}break;
-		case keySpace:
-		{
-			if (missileNumber < indexRestrictive&&beginning)
-			{
-				shootForward = player->GetCockpitCoordinateY();
-				shootCoord = 14;
-				missile[missileNumber].SetPositionX(shootCoord);
-				missile[missileNumber].SetPositionY(shootForward);
-				missile[missileNumber].SetActivate(true); 
-				missileNumber++;
-			}
-			else
-			{
-				beginning = false;
-				for (int a = 0; a < indexRestrictive; a++)
-					if (!missile[a].GeActivate())
-					{
-						missileNumber = a;
-						shootForward = player->GetCockpitCoordinateY();
-						shootCoord = 14;
-						missile[missileNumber].SetPositionX(shootCoord);
-						missile[missileNumber].SetPositionY(shootForward);
-						missile[missileNumber].SetActivate(true);
-						break;
-					}
-			}
-		}
-		default: {}
-		}
-	}
+	mob = new Mob();
 }
-bool Game::Check()
+void Game::CreatePlayer()
 {
-	for (int a = 0; a < indexRestrictive; a++)
+	player = new Player();	
+}
+void Game::CreateGameBoard()
+{
+	gameBoard = new GameBoard();
+}
+void Game::CreateMissile()
+{
+	missile = new Missile[size];
+}
+void Game::CreateKeyboard()
+{
+	keyboard = new Keyboard();
+}
+
+Menu *Game::GetMenu()
+{
+	return menu;
+}
+Mob *Game::GetMob()
+{
+	return mob;
+}
+Player *Game::GetPlayer()
+{
+	return player;
+}
+GameBoard *Game::GetGameBoard()
+{
+	return gameBoard;
+}
+Missile *Game::GetMissile()
+{
+	return missile;
+}
+Keyboard *Game::GetKeyboard()
+{
+	return keyboard;
+}
+
+bool Game::CheckHit()
+{
+	for (indexX = 0; indexX < indexRestrictive; indexX++)
 	{
-		for (int b = 0; b <indexRestrictive; b++)
+		for (indexY = 0; indexY <indexRestrictive; indexY++)
 		{
-			if (missile[a].GetPositionX() == mob[b].GetpolozenieX()&&
-				missile[a].GetPositionY() == mob[b].GetpolozenieY())
+			if (missile[indexX].GetPositionX() == mob[indexY].GetPosX()&&
+				missile[indexX].GetPositionY() == mob[indexY].GetPosY())
 			{
-				map[missile[a].GetPositionX()][missile[a].GetPositionY()] = 'X';
-				coordColisionX = missile[a].GetPositionX();
-				coordColisionY= missile[a].GetPositionY();
-				map[missile[a].GetPositionX()+1][missile[a].GetPositionY()] = ' ';
-				missile[a].SetActivate(false);
-				missile[a].SetPositionX(0);
-				missile[a].SetPositionY(0);
-				mob[b].Setzestrzelony(true);
-				mob[b].SetpolozenieX(0);
+				gameBoard->map[missile[indexX].GetPositionX()][missile[indexX].GetPositionY()] = 'X';
+				coordColisionX = missile[indexX].GetPositionX();
+				coordColisionY= missile[indexX].GetPositionY();
+				gameBoard->map[missile[indexX].GetPositionX()+1][missile[indexX].GetPositionY()] = ' ';
+				missile[indexX].SetActivate(false);
+				missile[indexX].SetPositionX(0);
+				missile[indexX].SetPositionY(0);
+				mob[indexY].SetShootDown(true);
+				mob[indexY].SetPosX(0);
 				return true;
 			}
 		}
 	}
 	return false;
 }
-void Game::Missile()
+void Game::_missile()
 {
 	if (missile[index].GeActivate())
 	{
-		map[missile[index].GetPositionX() + 1][missile[index].GetPositionY()] = ' ';
-		map[missile[index].GetPositionX()][missile[index].GetPositionY()] = '!';
+		gameBoard->map[missile[index].GetPositionX() + 1][missile[index].GetPositionY()] = ' ';
+		gameBoard->map[missile[index].GetPositionX()][missile[index].GetPositionY()] = '!';
 		missile[index].SetPositiionX();
-		if (Check()) {}
+		if (CheckHit()) {}
 		if (missile[index].GetPositionX() < 0)
 		{
-			map[0][missile[index].GetPositionY()] = ' ';
+			gameBoard->map[0][missile[index].GetPositionY()] = ' ';
 			missile[index].SetActivate(false);
-			shootCoord = 14;
+			missile->SetShootCoord(14);
 		}
 	}
 }
@@ -214,38 +141,38 @@ int Game::EnemyRandom()
 }
 void Game::Enemy()
 {
-	if (mob[index].Getaktywny())
+	if (mob[index].GetActivate())
 	{
 		if (mobNumber < indexRestrictive&&counter%50==0)
 		{
-			mob[mobNumber].SetpolozenieY(EnemyRandom());
-			mob[mobNumber].Setaktywny(true);
-			map[mob[mobNumber].GetpolozenieX()][mob[mobNumber].GetpolozenieY()] = 'Q';
-			mob[mobNumber].SetwrogIstnieje(true);
+			mob[mobNumber].SetPosY(EnemyRandom());
+			mob[mobNumber].SetActivate(true);
+			gameBoard->map[mob[mobNumber].GetPosX()][mob[mobNumber].GetPosY()] = 'Q';
+			mob[mobNumber].SetEnemyExist(true);
 			mobNumber++;
 		}
 		else if (mobNumber > indexRestrictive) mobNumber = indexRestrictive;
-		else if (mob[index].GetpolozenieX() > 17||
-			(mob[index].GetpolozenieX()== 16&&
-				mob[index].GetpolozenieY() == player->GetCockpitCoordinateY())||
-				(mob[index].GetpolozenieX() == 17 &&
-					mob[index].GetpolozenieY() == player->GetCoordinateLeftWingY())||
-					(mob[index].GetpolozenieX() == 17 &&
-						mob[index].GetpolozenieY() == player->GetCoordinateWingRightY()))
+		else if (mob[index].GetPosX() > 17||
+			(mob[index].GetPosX()== 16&&
+				mob[index].GetPosY() == player->GetCockpitCoordinateY())||
+				(mob[index].GetPosX() == 17 &&
+					mob[index].GetPosY() == player->GetCoordinateLeftWingY())||
+					(mob[index].GetPosX() == 17 &&
+						mob[index].GetPosY() == player->GetCoordinateWingRightY()))
 		{
 			player->DecrementLife();
-			map[mob[index].GetpolozenieX()][mob[index].GetpolozenieY()] = ' ';
-			mob[index].SetpolozenieX(0);
-			mob[index].SetpolozenieY(EnemyRandom());
-			map[mob[index].GetpolozenieX()][mob[index].GetpolozenieY()] = 'Q';
+			gameBoard->map[mob[index].GetPosX()][mob[index].GetPosY()] = ' ';
+			mob[index].SetPosX(0);
+			mob[index].SetPosY(EnemyRandom());
+			gameBoard->map[mob[index].GetPosX()][mob[index].GetPosY()] = 'Q';
 		}
-		else if (mob[index].Getzestrzelony())
+		else if (mob[index].GetShootDown())
 		{
-			mob[index].Setzestrzelony(false);
+			mob[index].SetShootDown(false);
 			Sleep(40);
-			map[coordColisionX][coordColisionY] = ' ';
-			mob[index].SetpolozenieX(0);
-			mob[index].SetpolozenieY(0);
+			gameBoard->map[coordColisionX][coordColisionY] = ' ';
+			mob[index].SetPosX(0);
+			mob[index].SetPosY(0);
 			++enemyKilled;
 			if (enemyKilled % enemyKilledFallingSpeedModulo == 0)
 			{
@@ -262,15 +189,15 @@ void Game::Enemy()
 			else if (enemyKilled % indexRestrictiveModulo == 0)
 				indexRestrictive++;
 			player->AddMoney(bonusLife*2);
-			mob[index].SetpolozenieY(EnemyRandom());
+			mob[index].SetPosY(EnemyRandom());
 		}
-		else if (indexRestrictive > sizeOfArray) indexRestrictive = sizeOfArray;
+		else if (indexRestrictive > size) 
+			indexRestrictive = size;
 	}
 }
 void Game::GameLoop()
 {
-	missile = new Naboj[sizeOfArray];
-	mob = new Mob[sizeOfArray];
+	mob = new Mob[size];
 	counter = 0;
 	player->SetMoney(0);
 	fallingTime = 1;
@@ -283,19 +210,19 @@ void Game::GameLoop()
 		counter++;
 		if (counter > 999) counter = 0;
 		else if (fallingTime > 99) fallingTime=0;
-		else if (mob[index].GetwrogIstnieje())
+		else if (mob[index].GetEnemyExist())
 		{
 			if (fallingTime%enemyFallingTime == 0)
 			{
-				map[mob[index].GetpolozenieX()][mob[index].GetpolozenieY()] = ' ';
-				mob[index]._SetpolozenieX();
-				map[mob[index].GetpolozenieX()][mob[index].GetpolozenieY()] = 'Q';
+				gameBoard->map[mob[index].GetPosX()][mob[index].GetPosY()] = ' ';
+				mob[index].SetPosX();
+				gameBoard->map[mob[index].GetPosX()][mob[index].GetPosY()] = 'Q';
 			}
 			++fallingTime;
 		}
-		Missile();
-		Map();
-		Keyboard();
+		_missile();
+		gameBoard->Map(player);
+		keyboard->AirPlaneControll(player, gameBoard, missile);//Keyboard();
 		Display();
 		Enemy();
 		if (player->Gameover())

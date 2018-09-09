@@ -5,4 +5,9 @@
 #include <algorithm>
 #include <fstream>
 #include "Manager.h"
-using namespace std;
+#include "rlutil.h"
+#include <ctime>
+
+using std::cout;
+using std::endl;
+using std::ofstream;

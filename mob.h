@@ -2,26 +2,26 @@
 #include "librares.h"
 class Mob
 {
-	int polozenieX, polozenieY;
-	bool aktywny;
-	bool wrogIstnieje;
-	bool zestrzelony;
+	int posX, posY;
+	bool activate;
+	bool exist;
+	bool shootDown;
 public:
 	Mob()
 	{
-		polozenieX = polozenieY = 0;
-		aktywny = true;
-		zestrzelony = false;
+		posX = posY = 0;
+		activate = true;
+		shootDown = false;
 	}
-	void SetpolozenieX(int a) { polozenieX = a; }
-	void SetpolozenieY(int a) { polozenieY = a; }
-	void Setaktywny(bool a) { aktywny = a; }
-	int GetpolozenieX() { return polozenieX; }
-	int GetpolozenieY() { return polozenieY; }
-	bool Getaktywny() { return aktywny; }
-	bool GetwrogIstnieje() {return wrogIstnieje;}
-	void SetwrogIstnieje(bool a) { wrogIstnieje = a; }
-	void _SetpolozenieX() { polozenieX++; }
-	bool Getzestrzelony() { return zestrzelony; }
-	void Setzestrzelony(bool a) { zestrzelony=a; }
+	void SetPosX(int a) { posX = a; }
+	void SetPosY(int a) { posY = a; }
+	void SetActivate(bool a) { activate = a; }
+	int GetPosX() { return posX; }
+	int GetPosY() { return posY; }
+	bool GetActivate() { return activate; }
+	bool GetEnemyExist() {return exist;}
+	void SetEnemyExist(bool a) { exist = a; }
+	void SetPosX() { posX++; }
+	bool GetShootDown() { return shootDown; }
+	void SetShootDown(bool a) { shootDown=a; }
 };
