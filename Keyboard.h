@@ -1,15 +1,13 @@
 #pragma once
 #include "librares.h"
-#include "Player.h"
+#include "FighterAirPlane.h"
 #include "GameBoard.h"
 #include "Missile.h"
 
 class Keyboard
 {
 public:
-	Keyboard();
-	~Keyboard();
-	void AirPlaneControll(Player *player, GameBoard *gameBoard, Missile *missile);
+	void AirPlaneControll(FighterAirPlane*, GameBoard *, Missile *);
 };
 
 extern int indexRestrictive;;

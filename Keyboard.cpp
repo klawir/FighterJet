@@ -1,16 +1,7 @@
 #include "Keyboard.h"
 
 
-
-Keyboard::Keyboard()
-{
-}
-
-
-Keyboard::~Keyboard()
-{
-}
-void Keyboard::AirPlaneControll(Player *player, GameBoard *gameBoard, Missile *missile)
+void Keyboard::AirPlaneControll(FighterAirPlane *fighterAirPlane, GameBoard *gameBoard, Missile *missile)
 {
 	int key;
 	if (_kbhit())
@@ -20,38 +11,38 @@ void Keyboard::AirPlaneControll(Player *player, GameBoard *gameBoard, Missile *m
 		{
 		case keyLeft:
 		{
-			if (player->GetCoordinateLeftWingY() > gameBoard->GetWallLeft())
+			if (fighterAirPlane->GetCoordinateLeftWingY() > gameBoard->GetWallLeft())
 			{
-				gameBoard->map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = ' ';
-				gameBoard->map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = ' ';
-				gameBoard->map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = ' ';
-				player->DecrementCoordinateAirPlaneY();
-				gameBoard->map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-				gameBoard->map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-				gameBoard->map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
+				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
+				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
+				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
+				fighterAirPlane->DecrementCoordinateAirPlaneY();
+				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
+				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
+				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 			}
 		}break;
 		case keyRight:
 		{
-			if (player->GetCoordinateWingRightY() < gameBoard->GetWallRight())
+			if (fighterAirPlane->GetCoordinateWingRightY() < gameBoard->GetWallRight())
 			{
-				gameBoard->map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = ' ';
-				gameBoard->map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = ' ';
-				gameBoard->map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = ' ';
-				player->IncrementCoordinateAirPlaneY();
-				gameBoard->map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-				gameBoard->map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-				gameBoard->map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
+				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
+				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
+				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
+				fighterAirPlane->IncrementCoordinateAirPlaneY();
+				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
+				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
+				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 			}
 		}break;
 		case keySpace:
 		{
 			if (missile->GetMissileNumber() < indexRestrictive&&gameBoard->GetBeginning())
 			{
-				missile->SetShootForward(player->GetCockpitCoordinateY());
+				missile->SetShootForward(fighterAirPlane->GetCockpitCoordinateY());
 				missile->SetShootCoord(14);
-				missile[missile->GetMissileNumber()].SetPositionX(missile->GetShootCoord());
-				missile[missile->GetMissileNumber()].SetPositionY(missile->GetShootForward());
+				missile[missile->GetMissileNumber()].SetPosX(missile->GetShootCoord());
+				missile[missile->GetMissileNumber()].SetPosY(missile->GetShootForward());
 				missile[missile->GetMissileNumber()].SetActivate(true);
 				missile->IncreaseMissileNumber();
 			}
@@ -62,10 +53,10 @@ void Keyboard::AirPlaneControll(Player *player, GameBoard *gameBoard, Missile *m
 					if (!missile[index].GeActivate())
 					{
 						missile->SetMissileNumber(index);
-						missile->SetShootForward(player->GetCockpitCoordinateY());
+						missile->SetShootForward(fighterAirPlane->GetCockpitCoordinateY());
 						missile->SetShootCoord(14);
-						missile[missile->GetMissileNumber()].SetPositionX(missile->GetShootCoord());
-						missile[missile->GetMissileNumber()].SetPositionY(missile->GetShootForward());
+						missile[missile->GetMissileNumber()].SetPosX(missile->GetShootCoord());
+						missile[missile->GetMissileNumber()].SetPosY(missile->GetShootForward());
 						missile[missile->GetMissileNumber()].SetActivate(true);
 						break;
 					}

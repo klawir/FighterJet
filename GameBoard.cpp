@@ -1,5 +1,5 @@
 #include "GameBoard.h"
-
+#include "FighterAirPlane.h"
 
 
 GameBoard::GameBoard()
@@ -39,9 +39,9 @@ void GameBoard::Map(Player *player)
 		}
 	}
 	cout << "$ " << player->getMoney() << " " << endl;
-	cout << "lifes " << player->getLife() << endl;
+	cout << "lifes " << player->GetLife() << endl;
 }
-void GameBoard::PrepareMap(Player *player)
+void GameBoard::PrepareMap(FighterAirPlane *fighterAirPlane)
 {
 	int indexX;
 	int indexY;
@@ -60,9 +60,9 @@ void GameBoard::PrepareMap(Player *player)
 	for (indexX = 0; indexX < size1; indexX++)
 		map[indexX][0] = ' ';
 	map[0][0] = map[0][size2 - 1] = ' ';
-	map[player->GetCocpitStartLocateX()][player->GetCockpitCoordinateY()] = '^';
-	map[player->GetLeftWingStartLocateX()][player->GetCoordinateLeftWingY()] = '<';
-	map[player->GetWingRightStartLocateX()][player->GetCoordinateWingRightY()] = '>';
+	map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
+	map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
+	map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 }
 bool GameBoard::GetBeginning()
 {

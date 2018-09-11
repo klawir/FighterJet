@@ -46,3 +46,15 @@ void Menu::Display()
 		ClearScreen();
 	}
 }
+bool Menu::GetExit()
+{
+	return exit; 
+}
+void Menu::SetExit(bool zmien)
+{
+	exit = zmien; 
+}
+int Menu::GetChoice()
+{
+	return choice;
+}

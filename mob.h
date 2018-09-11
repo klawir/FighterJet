@@ -1,27 +1,29 @@
 #pragma once
-#include "librares.h"
-class Mob
+#include "Coordinates.h"
+
+class Mob: public Coordinates
 {
-	int posX, posY;
-	bool activate;
 	bool exist;
 	bool shootDown;
+	char body;
 public:
-	Mob()
-	{
-		posX = posY = 0;
-		activate = true;
-		shootDown = false;
-	}
-	void SetPosX(int a) { posX = a; }
-	void SetPosY(int a) { posY = a; }
-	void SetActivate(bool a) { activate = a; }
-	int GetPosX() { return posX; }
-	int GetPosY() { return posY; }
-	bool GetActivate() { return activate; }
-	bool GetEnemyExist() {return exist;}
-	void SetEnemyExist(bool a) { exist = a; }
-	void SetPosX() { posX++; }
-	bool GetShootDown() { return shootDown; }
-	void SetShootDown(bool a) { shootDown=a; }
+	Mob();
+
+	char GetBody();
+	
+	bool GetEnemyExist();
+	void SetEnemyExist(bool);
+
+	void IncremeniPosX();
+
+	bool GetShootDown();
+	void SetShootDown(bool);
+
+	bool GeActivate();
+	void SetPosX(int);
+	void SetPosY(int);
+	void SetActivate(bool);
+
+	int GetPosX();
+	int GetPosY();
 };

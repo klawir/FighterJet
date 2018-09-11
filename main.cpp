@@ -1,17 +1,16 @@
 #pragma once
-#include "game.h"
-
-extern Missile *missile;
+#include "Igame.h"
 
 int main()
 {
-	Game *game = new Game();
+	IGame *game = new IGame();
 	game->CreateMenu();
 	game->CreateMob();
 	game->CreatePlayer();
 	game->CreateGameBoard();
 	game->CreateMissile();
 	game->CreateKeyboard();
+	game->CreateFighterAirPlane();
 	HWND console = GetConsoleWindow();
 	RECT consoleResolution;
 	GetWindowRect(console, &consoleResolution);
@@ -29,10 +28,10 @@ int main()
 			case 1: break;
 			case 2: return 0;
 		}
-		game->GetGameBoard()->PrepareMap(game->GetPlayer());
+		game->GetGameBoard()->PrepareMap(game->GetFighterAirPlane());
 		system("cls");
 		game->GameLoop();
-		game->~Game();
+		game->~IGame();
 		rlutil::setBackgroundColor(0);
 	}
 }

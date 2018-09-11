@@ -1,49 +1,33 @@
-
 #pragma once
-class Missile
+
+#include "Coordinates.h"
+
+class Missile: public Coordinates
 	{
-		int posX, posY;
-		bool activate;
 		int missileNumber;
 		int shootCoord;
 		int shootForward;
 	public:
 		Missile();
 		~Missile();
+
 		void IncreaseMissileNumber();
-		void SetPositionX(int a) { posX = a; }
-		void SetPositionY(int a) { posY = a; }
-		void SetActivate(bool a) { activate = a; }
 
-		int GetPositionX() { return posX; }
-		int GetPositionY() { return posY; }
+		void DecrementPositiionX();
 
-		bool GeActivate() { return activate; }
+		int GetMissileNumber();
+		void SetMissileNumber(int);
+		void SetShootForward(int);
+		int GetShootForward();
+		void SetShootCoord(int);
+		int GetShootCoord();
 
-		void SetPositiionX() { posX--; }
+		void SetPosX(int);
+		void SetPosY(int);
+		void SetActivate(bool);
 
-		int GetMissileNumber()
-		{
-			return missileNumber;
-		}
-		void SetMissileNumber(int set)
-		{
-			missileNumber = set;
-		}
-		void SetShootForward(int set)
-		{
-			shootForward = set;
-		}
-		int GetShootForward()
-		{
-			return shootForward;
-		}
-		void SetShootCoord(int set)
-		{
-			shootCoord = set;
-		}
-		int GetShootCoord()
-		{
-			return shootCoord;
-		}
+		int GetPosX();
+		int GetPosY();
+
+		bool GeActivate();
 	};

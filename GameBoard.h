@@ -1,6 +1,8 @@
 #pragma once
 #include "librares.h"
 #include "Player.h"
+#include "FighterAirPlane.h"
+
 class GameBoard
 {
 	static const int size1 = 19;
@@ -13,8 +15,8 @@ public:
 	~GameBoard();
 	char map[size1][size2];
 
-	void Map(Player *player);
-	void PrepareMap(Player *player);
+	void Map(Player *);
+	void PrepareMap(FighterAirPlane*);
 	
 	bool GetBeginning();
 	void SetBeginning(bool);
