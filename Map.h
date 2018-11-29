@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "FighterAirPlane.h"
 
-class GameBoard
+class Map
 {
 	static const int size1 = 19;
 	static const int size2 = 25;
@@ -11,11 +11,11 @@ class GameBoard
 	int wallRight;
 	bool beginning;
 public:
-	GameBoard();
-	~GameBoard();
+	Map();
+	~Map();
 	char map[size1][size2];
 
-	void Map(Player *);
+	void Draw(Player *);
 	void PrepareMap(FighterAirPlane*);
 	
 	bool GetBeginning();

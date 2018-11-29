@@ -1,0 +1,18 @@
+﻿  Coordinates.cpp
+  FighterAirPlane.cpp
+  GameManager.cpp
+  Map.cpp
+  GameCreator.cpp
+  Keyboard.cpp
+  main.cpp
+main.cpp(23): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Menu.cpp
+Menu.cpp(24): warning C4552: '|': operator has no effect; expected operator with side-effect
+  Missile.cpp
+  Mob.cpp
+  Player.cpp
+  Generating code
+  All 739 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  FighterPlane.vcxproj -> C:\Users\siema\documents\visual studio 2015\Projects\FighterPlane\Release\FighterPlane.exe
+  FighterPlane.vcxproj -> C:\Users\siema\documents\visual studio 2015\Projects\FighterPlane\Release\FighterPlane.pdb (Full PDB)

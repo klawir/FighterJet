@@ -1,9 +1,10 @@
 #pragma once
-#include "Igame.h"
+#include "GameCreator.h"
+#include "GameManager.h"
 
 int main()
 {
-	IGame *game = new IGame();
+	GameCreator *game = new GameCreator();
 	game->CreateMenu();
 	game->CreateMob();
 	game->CreatePlayer();
@@ -11,6 +12,7 @@ int main()
 	game->CreateMissile();
 	game->CreateKeyboard();
 	game->CreateFighterAirPlane();
+	//link 20001 - ref err?
 	HWND console = GetConsoleWindow();
 	RECT consoleResolution;
 	GetWindowRect(console, &consoleResolution);
@@ -31,7 +33,7 @@ int main()
 		game->GetGameBoard()->PrepareMap(game->GetFighterAirPlane());
 		system("cls");
 		game->GameLoop();
-		game->~IGame();
+		game->~GameCreator();
 		rlutil::setBackgroundColor(0);
 	}
 }

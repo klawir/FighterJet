@@ -1,7 +1,6 @@
 #include "Keyboard.h"
 
-
-void Keyboard::AirPlaneControll(FighterAirPlane *fighterAirPlane, GameBoard *gameBoard, Missile *missile)
+void Keyboard::AirPlaneControll(FighterAirPlane *fighterAirPlane, Map *map, Missile *missile)
 {
 	int key;
 	if (_kbhit())
@@ -11,33 +10,33 @@ void Keyboard::AirPlaneControll(FighterAirPlane *fighterAirPlane, GameBoard *gam
 		{
 		case keyLeft:
 		{
-			if (fighterAirPlane->GetCoordinateLeftWingY() > gameBoard->GetWallLeft())
+			if (fighterAirPlane->GetCoordinateLeftWingY() > map->GetWallLeft())
 			{
-				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
-				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
-				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
+				map->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
+				map->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
+				map->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
 				fighterAirPlane->DecrementCoordinateAirPlaneY();
-				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
-				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
-				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
+				map->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
+				map->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
+				map->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 			}
 		}break;
 		case keyRight:
 		{
-			if (fighterAirPlane->GetCoordinateWingRightY() < gameBoard->GetWallRight())
+			if (fighterAirPlane->GetCoordinateWingRightY() < map->GetWallRight())
 			{
-				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
-				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
-				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
+				map->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = ' ';
+				map->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = ' ';
+				map->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = ' ';
 				fighterAirPlane->IncrementCoordinateAirPlaneY();
-				gameBoard->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
-				gameBoard->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
-				gameBoard->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
+				map->map[fighterAirPlane->GetCocpitStartLocateX()][fighterAirPlane->GetCockpitCoordinateY()] = '^';
+				map->map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
+				map->map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 			}
 		}break;
 		case keySpace:
 		{
-			if (missile->GetMissileNumber() < indexRestrictive&&gameBoard->GetBeginning())
+			if (missile->GetMissileNumber() < indexRestrictive&&map->GetBeginning())
 			{
 				missile->SetShootForward(fighterAirPlane->GetCockpitCoordinateY());
 				missile->SetShootCoord(14);
@@ -48,7 +47,7 @@ void Keyboard::AirPlaneControll(FighterAirPlane *fighterAirPlane, GameBoard *gam
 			}
 			else
 			{
-				gameBoard->SetBeginning(false);
+				map->SetBeginning(false);
 				for (int index = 0; index < indexRestrictive; index++)
 					if (!missile[index].GeActivate())
 					{

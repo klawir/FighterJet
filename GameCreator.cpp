@@ -1,11 +1,11 @@
 #pragma once
-#include "Igame.h"
+#include "GameCreator.h"
 
 int indexRestrictive;
 bool IndexRestrictive;
 int indexX, indexY;
 
-IGame::IGame()
+GameCreator::GameCreator()
 {
 	mobNumber = 0;
 	enemyFallingTime = 40;
@@ -21,7 +21,7 @@ IGame::IGame()
 	enemyKilledIncrementLifeModulo = 10;
 	indexRestrictiveModulo = 5;
 }
-void IGame::Display()
+void GameCreator::Display()
 {
 	HANDLE hOut;
 	COORD Position;
@@ -30,7 +30,7 @@ void IGame::Display()
 	Position.Y = 0;
 	SetConsoleCursorPosition(hOut, Position);
 }
-IGame::~IGame()
+GameCreator::~GameCreator()
 {
 	mobNumber = 0;
 	enemyFallingTime = 40;
@@ -43,63 +43,63 @@ IGame::~IGame()
 	IndexRestrictive = false;
 	player->~Player();
 }
-void IGame::CreateMenu()
+void GameCreator::CreateMenu()
 {
 	menu = new Menu();
 }
-void IGame::CreateMob()
+void GameCreator::CreateMob()
 {
 	mob = new Mob[size];
 }
-void IGame::CreatePlayer()
+void GameCreator::CreatePlayer()
 {
 	player = new Player();	
 }
-void IGame::CreateGameBoard()
+void GameCreator::CreateGameBoard()
 {
-	gameBoard = new GameBoard();
+	gameBoard = new Map();
 }
-void IGame::CreateMissile()
+void GameCreator::CreateMissile()
 {
 	missile = new Missile[size];
 }
-void IGame::CreateKeyboard()
+void GameCreator::CreateKeyboard()
 {
 	keyboard = new Keyboard();
 }
-void IGame::CreateFighterAirPlane()
+void GameCreator::CreateFighterAirPlane()
 {
 	fighterAirPlane = new FighterAirPlane();
 }
-Menu *IGame::GetMenu()
+Menu *GameCreator::GetMenu()
 {
 	return menu;
 }
-Mob *IGame::GetMob()
+Mob *GameCreator::GetMob()
 {
 	return mob;
 }
-Player *IGame::GetPlayer()
+Player *GameCreator::GetPlayer()
 {
 	return player;
 }
-GameBoard *IGame::GetGameBoard()
+Map *GameCreator::GetGameBoard()
 {
 	return gameBoard;
 }
-Missile *IGame::GetMissile()
+Missile *GameCreator::GetMissile()
 {
 	return missile;
 }
-Keyboard *IGame::GetKeyboard()
+Keyboard *GameCreator::GetKeyboard()
 {
 	return keyboard;
 }
-FighterAirPlane *IGame::GetFighterAirPlane()
+FighterAirPlane *GameCreator::GetFighterAirPlane()
 {
 	return fighterAirPlane;
 }
-bool IGame::CheckHit()
+bool GameCreator::CheckHit()
 {
 	for (indexX = 0; indexX < indexRestrictive; indexX++)
 	{
@@ -123,11 +123,11 @@ bool IGame::CheckHit()
 	}
 	return false;
 }
-bool IGame::DetectGameOver()
+bool GameCreator::DetectGameOver()
 {
 	return player->GetLife()==0;
 }
-void IGame::GameOver()
+void GameCreator::GameOver()
 {
 	cout << "you lose!" << endl;
 	Sleep(1500);
@@ -137,7 +137,7 @@ void IGame::GameOver()
 	plik << "points " << player->getMoney() << endl;
 	plik.close();
 }
-void IGame::Missiles()
+void GameCreator::Missiles()
 {
 	if (missile[index].GeActivate())
 	{
@@ -153,11 +153,11 @@ void IGame::Missiles()
 		}
 	}
 }
-int IGame::EnemyRandom()
+int GameCreator::EnemyRandom()
 {
 	return (rand() % 19) + 4;
 }
-void IGame::Enemy()
+void GameCreator::Enemy()
 {
 	if (mob[index].GeActivate())
 	{
@@ -213,7 +213,7 @@ void IGame::Enemy()
 			indexRestrictive = size;
 	}
 }
-void IGame::GameLoop()
+void GameCreator::GameLoop()
 {
 	//mob = new Mob[size];
 	counter = 0;
@@ -239,7 +239,7 @@ void IGame::GameLoop()
 			++fallingTime;
 		}
 		Missiles();
-		gameBoard->Map(player);
+		gameBoard->Draw(player);
 		keyboard->AirPlaneControll(fighterAirPlane, gameBoard, missile);
 		Display();
 		Enemy();

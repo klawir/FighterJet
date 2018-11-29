@@ -3,8 +3,6 @@
 
 Mob::Mob():Coordinates()
 {
-	//posX = 0;
-	//posY = 0;
 	activate = true;
 	shootDown = false;
 	body = 'Q';

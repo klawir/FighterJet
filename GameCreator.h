@@ -4,12 +4,12 @@
 #include "Missile.h"
 #include "mob.h"
 #include "Player.h"
-#include "GameBoard.h"
+#include "Map.h"
 #include "Keyboard.h"
 #include "menu.h"
 #include "Coordinates.h"
 
-class IGame
+class GameCreator
 {
 	int enemyKilled;
 	int fallingTime, enemyFallingTime;
@@ -28,13 +28,13 @@ protected:
 	Menu *menu;
 	Mob *mob;
 	Player *player;
-	GameBoard *gameBoard;
+	Map *gameBoard;
 	Missile *missile;
 	Keyboard *keyboard;
 	FighterAirPlane *fighterAirPlane;
 public:
-	IGame();
-	~IGame();
+	GameCreator();
+	~GameCreator();
 	void CreateMenu();
 	void CreateMob();
 	void CreatePlayer();
@@ -46,7 +46,7 @@ public:
 	Menu *GetMenu();
 	Mob *GetMob();
 	Player *GetPlayer();
-	GameBoard *GetGameBoard();
+	Map *GetGameBoard();
 	Missile *GetMissile();
 	Keyboard *GetKeyboard();
 	FighterAirPlane *GetFighterAirPlane();

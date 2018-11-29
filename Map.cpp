@@ -1,8 +1,8 @@
-#include "GameBoard.h"
+#include "Map.h"
 #include "FighterAirPlane.h"
 
 
-GameBoard::GameBoard()
+Map::Map()
 {
 	wallLeft = 2;
 	wallRight = size2 - 2;
@@ -10,12 +10,12 @@ GameBoard::GameBoard()
 }
 
 
-GameBoard::~GameBoard()
+Map::~Map()
 {
 	beginning = true;
 }
 
-void GameBoard::Map(Player *player)
+void Map::Draw(Player *player)
 {
 	rlutil::setBackgroundColor(7);
 	for (int indexX = 0; indexX < size1; indexX++)
@@ -41,7 +41,7 @@ void GameBoard::Map(Player *player)
 	cout << "$ " << player->getMoney() << " " << endl;
 	cout << "lifes " << player->GetLife() << endl;
 }
-void GameBoard::PrepareMap(FighterAirPlane *fighterAirPlane)
+void Map::PrepareMap(FighterAirPlane *fighterAirPlane)
 {
 	int indexX;
 	int indexY;
@@ -64,19 +64,19 @@ void GameBoard::PrepareMap(FighterAirPlane *fighterAirPlane)
 	map[fighterAirPlane->GetLeftWingStartLocateX()][fighterAirPlane->GetCoordinateLeftWingY()] = '<';
 	map[fighterAirPlane->GetWingRightStartLocateX()][fighterAirPlane->GetCoordinateWingRightY()] = '>';
 }
-bool GameBoard::GetBeginning()
+bool Map::GetBeginning()
 {
 	return beginning;
 }
-void GameBoard::SetBeginning(bool set)
+void Map::SetBeginning(bool set)
 {
 	beginning = set;
 }
-int GameBoard::GetWallLeft()
+int Map::GetWallLeft()
 {
 	return wallLeft;
 }
-int GameBoard::GetWallRight()
+int Map::GetWallRight()
 {
 	return wallRight;
 }
